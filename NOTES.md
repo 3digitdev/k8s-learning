@@ -21,7 +21,7 @@
 #### Persistent Volumes:
 - [Reference](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
 - Since applications shift between Nodes, there's no expectation of storage permanence
-- Peristent Volumes are mounted to the Cluster, to give Nodes a shared storage method
+- Persistent Volumes are mounted to the Cluster, to give Nodes a shared storage method
 
 ### Internals
 #### Container:
@@ -127,7 +127,7 @@ env:
   - `kubectl logs <pod_name>`
 - Execute a command on a Container in a Pod:
   - `kubectl exec <pod_name> -- <command(s)>`
-- Create a depoyment
+- Create a Deployment
   - `kubectl create deployment <deploy_name> --image=<image>:<version>`
 - Expose a Service
   - `kubectl expose <deployment> --type="<ServiceSpec.Type>" --port=<port>`
@@ -144,7 +144,7 @@ env:
 - Build a Kubernetes Secret
   - `kubectl create secret [TYPE] <name> [OPTS]`
     - **TYPE:**
-      - Many types for various purposes like storing docker creds or ssh auth
+      - Many types for various purposes like storing docker credentials or ssh auth
       - See [Kubernetes Secret Types](https://kubernetes.io/docs/concepts/configuration/secret/#secret-types)
     - **OPTS:**
       - `--from-literal <key>=<value>`  (can do multiple)
