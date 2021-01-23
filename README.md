@@ -6,6 +6,12 @@ Exploratory Repo for learning K8s
 - Get the simple API built for this repo
   - `git clone https://github.com/3digitdev/k8s-learning.git && cd k8s-learning`
 
+---
+
+## Goal 0:  Stop typing `kuberenetes` :confounded:
+
+---
+
 ## Goal 1:  Simple API Application  :heavy_check_mark:
 
 Following [This Tutorial](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
@@ -76,9 +82,9 @@ Using [v1.20 API Reference](https://kubernetes.io/docs/reference/generated/kuber
 - Use minikube Docker env
   - `eval $(minikube -p minikube docker-env)`
 - Create the Deployment for the API, and then expose the Cluster using a Service (via YAML)
-  - `kubectl create -f k8s_yml/goal3/deployment_api.yml`
+  - `kubectl create -f k8s_yml/goal3_api.yml`
 - Create the Deployment for the Consumer (via YAML)
-  - `kubectl create -f k8s_yml/goal3/deployment_consumer.yml`
+  - `kubectl create -f k8s_yml/goal3_consumer.yml`
 - Verify the Consumer worked
   - `kubectl logs $(kubectl get pods -l app=fastconsumer_lbl -o jsonpath="{.items[0].metadata.name}")`
   - Should see something like this:
@@ -96,7 +102,7 @@ http://10.100.110.136:8080/hello [9] 200: {'message': 'Hello World!'}
 http://10.100.110.136:8080/hello [10] 200: {'message': 'Hello World!'}
 ```
 - Cleanup
-  - `kubectl delete -f k8s_yml/goal3/deployment_api.yml -f k8s_yml/goal3/deployment_consumer.yml`
+  - `kubectl delete -f k8s_yml/goal3_api.yml -f k8s_yml/goal3_consumer.yml`
 - Verify Cleanup
   - `kubectl get pods,deploy,svc`
 - Take down the Cluster
@@ -105,7 +111,3 @@ http://10.100.110.136:8080/hello [10] 200: {'message': 'Hello World!'}
 ---
 
 ## Goal 4:  Add a Persistent Volume that both API and Consumer can access
-
----
-
-## Goal 5:  Stop typing `kuberenetes` :confounded:
