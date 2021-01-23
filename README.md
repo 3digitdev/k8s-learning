@@ -56,14 +56,14 @@ Using [v1.20 API Reference](https://kubernetes.io/docs/reference/generated/kuber
 - Use minikube Docker env
   - `eval $(minikube -p minikube docker-env)`
 - Create the deployment for the API, and then expose the Cluster using a Service (via YAML)
-  - `kubectl create -f k8s_yml/goal2.yml`
+  - `kubectl create -f kubernetes/goal2.yml`
 - Shortcut for Node port
   - `export NODE_PORT=$(kubectl get svc/fastapi-svc -o jsonpath="{.spec.ports[0].nodePort}")`
 - Ping the API
   - `curl $(minikube ip):$NODE_PORT/hello`
   - Expected response:  `{"message":"Hello World!"}`
 - Cleanup
-  - `kubectl delete -f k8s_yml/goal2.yml`
+  - `kubectl delete -f kubernetes/goal2.yml`
 - Verify Cleanup
   - `kubectl get pods,deploy,svc`
 - Take down the Cluster
@@ -82,9 +82,9 @@ Using [v1.20 API Reference](https://kubernetes.io/docs/reference/generated/kuber
 - Use minikube Docker env
   - `eval $(minikube -p minikube docker-env)`
 - Create the Deployment for the API, and then expose the Cluster using a Service (via YAML)
-  - `kubectl create -f k8s_yml/goal3_api.yml`
+  - `kubectl create -f kubernetes/goal3_api.yml`
 - Create the Deployment for the Consumer (via YAML)
-  - `kubectl create -f k8s_yml/goal3_consumer.yml`
+  - `kubectl create -f kubernetes/goal3_consumer.yml`
 - Verify the Consumer worked
   - `kubectl logs $(kubectl get pods -l app=fastconsumer_lbl -o jsonpath="{.items[0].metadata.name}")`
   - Should see something like this:
@@ -102,7 +102,7 @@ http://10.100.110.136:8080/hello [9] 200: {'message': 'Hello World!'}
 http://10.100.110.136:8080/hello [10] 200: {'message': 'Hello World!'}
 ```
 - Cleanup
-  - `kubectl delete -f k8s_yml/goal3_api.yml -f k8s_yml/goal3_consumer.yml`
+  - `kubectl delete -f kubernetes/goal3_api.yml -f kubernetes/goal3_consumer.yml`
 - Verify Cleanup
   - `kubectl get pods,deploy,svc`
 - Take down the Cluster
