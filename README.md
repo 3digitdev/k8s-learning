@@ -1,14 +1,17 @@
 # Learning Kubernetes
 Exploratory Repo for learning K8s
 
+### Setup
+
+- Get the simple API built for this repo
+  - `git clone https://github.com/3digitdev/k8s-learning.git`
+- Create a Docker image that runs it
+  - `cd k8s-learning && docker build -t fastapi .`
+
 ## Goal 1:  Simple API Application  :heavy_check_mark:
 
 Following [This Tutorial](https://kubernetes.io/docs/tutorials/kubernetes-basics/)
 
-- Create a simple API with Python
-  - `git clone https://github.com/3digitdev/k8s-learning.git`
-- Create a Docker image that runs it
-  - `cd k8s-learning && docker build -t fastapi .`
 - Build a simple single-node cluster
   - `minikube start`
 - Use minikube Docker env
