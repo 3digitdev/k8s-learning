@@ -44,4 +44,4 @@ Exploratory Repo for learning K8s
 
 ---
 
-## Goal 5:  Stop typing `kuberenetes` :(
+## Goal 5:  Stop typing `kuberenetes` :confounded:
