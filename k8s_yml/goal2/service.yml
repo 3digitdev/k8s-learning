@@ -1,14 +1,14 @@
-apiVersion: v1
+apiVersion: v1  # Use this for Service
 kind: Service
 metadata:
-  name: fastapi-svc
+  name: fastapi-svc  # Custom name for the Service
   labels:
-    app: fastapi
+    app: fastapi  # Use a common label
 spec:
   ports:
-  - port: 8080
+  - port: 8080  # Expose this port
     protocol: TCP
-    nodePort: 32222
-  type: NodePort
+    nodePort: 32222  # Using
+  type: NodePort     # NodePort
   selector:
-    app: fastapi
+    app: fastapi     # Match Pod(s) with this label
