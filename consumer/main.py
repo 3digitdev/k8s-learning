@@ -5,8 +5,9 @@ import time
 
 
 def main():
-    url = os.getenv("API_URL")
-    port = os.getenv("API_PORT")
+    # These 2 env variables are set in every pod that gets initialized after the FastAPI Service
+    url = os.getenv("FASTAPI_SVC_SERVICE_HOST")
+    port = os.getenv("FASTAPI_SVC_SERVICE_PORT")
     # Ping for 30 seconds
     for i in range(10):
         response = requests.get(url=f"http://{url}:{port}/hello")

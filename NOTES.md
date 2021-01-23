@@ -169,8 +169,8 @@ services..............svc
 
 ### Miscellaneous 
 - Get only Pod and store the Pod name as $POD_NAME
-  - `export POD_NAME=$(kubectl get pods -o go-template --template '{{range .items}} {{.metadata.name}}{{"\n"}}{{end}}')`
+  - `export POD_NAME=$(kubectl get pods -l <LABEL> -o jsonpath="{.items[0].metadata.name}")`
 - Get a Service and store the NodePort as $NODE_PORT
-  - `export NODE_PORT=$(kubectl get svc/<SERVICE_NAME> -o go-template='{{(index .spec.ports 0).nodePort}}')`
+  - `export NODE_PORT=$(kubectl get svc/<SERVICE_NAME> -o jsonpath="{.spec.ports[0].nodePort}")`
 - Bash inside a Pod (`exit` to leave)
   - `kubectl exec -it $POD_NAME -- bash`

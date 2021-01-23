@@ -1,0 +1,20 @@
+apiVersion: apps/v1  # Use this for Deployment
+kind: Deployment
+metadata:
+  name: fastconsumer  # Name of the Deployment
+  labels:
+    app: fastconsumer_lbl  # Give a label to the Deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastconsumer_lbl  # This Deployment should only use Pods with this Label
+  template:
+    metadata:
+      labels:
+        app: fastconsumer_lbl # Label for the Deployment to match on
+    spec:
+      containers:
+      - name: fastconsumer  # Name of the Container
+        image: fastconsumer:latest  # Image to use
+        imagePullPolicy: Never  # Need this for local images
