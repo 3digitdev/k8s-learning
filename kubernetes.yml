@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fastapi
+spec:
+  template:
+    metadata:
+      name: fastapi-pod
+    spec:
+      containers:
+      - name: fastapi
+        image: fastapi:latest
+        imagePullPolicy: Never
+      restartPolicy: Never
