@@ -1,0 +1,22 @@
+apiVersion: apps/v1  # Use this for Deployments
+kind: Deployment
+metadata:
+  name: fastapi-deploy  # Name of the deploy
+  labels:
+    app: fastapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi
+  template:
+    metadata:
+      labels:
+        app: fastapi
+    spec:
+      containers:
+      - name: fastapi
+        image: fastapi:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080

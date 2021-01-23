@@ -31,10 +31,34 @@ Following [This Tutorial](https://kubernetes.io/docs/tutorials/kubernetes-basics
   - `kubectl delete svc/k8s-fastapi`
 - Verify cleanup
   - `kubectl get pods,deploy,svc`
+- Take down the Cluster
+  - `minikube delete`
 
 ---
 
-## Goal 2:  Goal 1, but with YAML
+## Goal 2:  Goal 1, but with YAML  :heavy_check_mark:
+
+Using [v1.20 API Reference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/)
+
+- Build a simple single-node cluster
+  - `minikube start`
+- Use minikube Docker env
+  - `eval $(minikube -p minikube docker-env)`
+- Create the deployment from YAML
+  - `kubectl create -f k8s_yml/goal2/deployment.yml`
+- Expose the Cluster using a Service from YAML
+  - `kubectl apply -f k8s_yml/goal2/service.yml`
+- Shortcut for Node port
+  - `export NODE_PORT=$(kubectl get svc/fastapi-svc -o go-template='{{(index .spec.ports 0).nodePort}}')`
+- Ping the API
+  - `curl $(minikube ip):$NODE_PORT/hello`
+  - Expected response:  `{"message":"Hello World!"}`
+- Cleanup
+  - `kubectl delete -f k8s_yml/goal2/service.yml -f k8s_yml/goal2/deployment.yml`
+- Verify Cleanup
+  - `kubectl get pods,deploy,svc`
+- Take down the Cluster
+  - `minikube delete`
 
 ---
 
