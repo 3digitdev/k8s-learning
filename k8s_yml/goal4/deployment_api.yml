@@ -1,0 +1,37 @@
+apiVersion: apps/v1  # Use this for Deployment
+kind: Deployment
+metadata:
+  name: fastapi-deploy  # Name of the Deployment
+  labels:
+    app: fastapi  # Give a label to the Deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi  # This Deployment should only use Pods with this Label
+  template:
+    metadata:
+      labels:
+        app: fastapi  # Label for the Deployment to match on
+    spec:
+      containers:
+      - name: fastapi  # Name of the Container
+        image: fastapi:latest  # Image to use
+        imagePullPolicy: Never  # Need this for local images
+        ports:
+        - containerPort: 8080  # Expose this Port (used by FastAPI) for the Cluster to see
+---
+apiVersion: v1  # Use this for Service
+kind: Service
+metadata:
+  name: fastapi-svc  # Custom name for the API Service
+  labels:
+    app: fastapi  # Use a common label
+spec:
+  selector:
+    app: fastapi     # Match Pod(s) with this label
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    port: 8080        # Route this port inside the Pod
+    targetPort: 8080  # To this Port externally
