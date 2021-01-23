@@ -4,11 +4,14 @@
 
 ### High Level
 
+[Kubernetes Overview](https://kubernetes.io/docs/concepts/overview/components/)
+
 #### Cluster:
 - A group of nodes that represent one large computing instance
 - Has a single "master" that manages the Cluster
 
 #### Node:
+- [Reference](https://kubernetes.io/docs/concepts/architecture/nodes/)
 - A single computing instance in a Cluster.
 - This could be a physical machine, or a VM, etc.
 - These share the work of running the Pods
@@ -16,6 +19,7 @@
 - A single Node can have multiple Pods running on it
 
 #### Persistent Volumes:
+- [Reference](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
 - Since applications shift between Nodes, there's no expectation of storage permanence
 - Peristent Volumes are mounted to the Cluster, to give Nodes a shared storage method
 
@@ -24,9 +28,10 @@
 - A single contained application instance (such as a Docker Container)
 
 #### Pod:
+- [Reference](https://kubernetes.io/docs/concepts/workloads/pods/)
 - A group of Containers that share the same resources and local network
 - **Shared Resources:**
-  - Shared storage, as "Volumes"
+  - Shared storage, as [Volumes](https://kubernetes.io/docs/concepts/storage/volumes/)
   - Networking, as a unique Cluster IP address
   - Info about how to run each Container (image version, specific ports, etc.)
 - Each Pod is tied to a single Node where it was scheduled to
@@ -39,6 +44,7 @@
 - Manages the Pod(s) inside of it
 
 #### Service:
+- [Reference](https://kubernetes.io/docs/concepts/services-networking/service/)
 - Defines a logical set of Pods, and a policy on how to access them
 - Defined using YAML
 - The set of Pods targeted by a Service is determined by a `LabelSelector`
@@ -61,6 +67,7 @@
 ### Configuration:
 
 #### Ingress:
+- [Reference](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 - This is an open channel between the outside world and the Cluster
 - By default, Clusters have no communication with the outside world
 - Multiple methods:
@@ -68,6 +75,7 @@
   - LoadBalancer
 
 #### ConfigMaps:
+- [Reference](https://kubernetes.io/docs/concepts/configuration/configmap/)
 - A method of setting up environment variables to be used across multiple microservices
 - Can be re-used across multiple containers instead of having to set them inside of Dockerfiles
 - Store *non-confidential* key-value pairs
@@ -84,6 +92,7 @@ env:
 ```
 
 #### Kubernetes Secrets:
+- [Reference](https://kubernetes.io/docs/concepts/configuration/secret/)
 - Also key-value pairs
 - Intended for confidential information
 - Stored using Base64
@@ -136,6 +145,7 @@ env:
   - `kubectl create secret [TYPE] <name> [OPTS]`
     - **TYPE:**
       - Many types for various purposes like storing docker creds or ssh auth
+      - See [Kubernetes Secret Types](https://kubernetes.io/docs/concepts/configuration/secret/#secret-types)
     - **OPTS:**
       - `--from-literal <key>=<value>`  (can do multiple)
       - `--from-file <file>`
