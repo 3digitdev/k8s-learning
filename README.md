@@ -111,3 +111,7 @@ http://10.100.110.136:8080/hello [10] 200: {'message': 'Hello World!'}
 ---
 
 ## Goal 4:  Add a Persistent Volume that both API and Consumer can access
+
+---
+
+## Goal 5:  Utilize an Ingress to manage access to Pods
