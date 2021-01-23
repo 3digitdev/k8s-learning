@@ -133,7 +133,7 @@ env:
     - `--from-file <file>`
     - `--from-env-file <file>`
 - Build a Kubernetes Secret
-  - kubectl create secret [TYPE] <name> [OPTS]
+  - `kubectl create secret [TYPE] <name> [OPTS]`
     - **TYPE:**
       - Many types for various purposes like storing docker creds or ssh auth
     - **OPTS:**
