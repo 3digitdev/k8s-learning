@@ -18,11 +18,6 @@
   - The Cluster will manage who is running what, shifting resources, balancing, etc.
 - A single Node can have multiple Pods running on it
 
-#### Persistent Volumes:
-- [Reference](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
-- Since applications shift between Nodes, there's no expectation of storage permanence
-- Persistent Volumes are mounted to the Cluster, to give Nodes a shared storage method
-
 ### Internals
 #### Container:
 - A single contained application instance (such as a Docker Container)
@@ -61,6 +56,40 @@
   - `ExternalName`
     - Exposes the Service at a name defined by the `externalName` ServiceSpec property
     - Requires `kube-dns:1.7+`
+
+### Storage
+
+#### Persistent Volumes:
+- [Reference](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
+- Since applications shift between Nodes, there's no expectation of storage permanence
+- Persistent Volumes are mounted to the Cluster, to give Nodes a shared storage method
+- There is a `hostPath` PersistentVolume that uses a file/dir on a Node to emulate network-attached storage
+  - **DO NOT USE THIS IN PRODUCTION**
+
+#### PersistentVolumeClaim (PVC):
+- [Reference](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
+- A request for storage by a User
+- Each PVC consumes PV resources
+- Can request specific sizes, or [access modes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes)
+
+#### StorageClass:
+- [Reference](https://kubernetes.io/docs/concepts/storage/storage-classes/)
+- Provides a way for an admin to describe the "classes" of storage they offer
+  - Commonly called "profiles" in other storage systems
+- Requires the `provisioner`, `parameters`, and `reclaimPolicy` fields
+- [Provisioner Options](https://kubernetes.io/docs/concepts/storage/storage-classes/#provisioner)
+  - These are not the only options available!
+- Reclaim Policy
+  - Specifies the `reclaimPolicy` for any PVs that are dynamically created by this StorageClass
+  - Can either be `Delete` or `Retain` (defaults to `Delete`)
+- `allowVolumeExpansion`
+  - Requires `kubernetes v1.11+`
+  - If set to `true`, allows PVCs to resize the PV by modifying the PVC requested amount
+  - You cannot **shrink** a Volume this way -- Only grow it. 
+- `volumeBindingMode`
+  - Controls when volume binding and dynamic provisioning should occur
+  - `Immediate` (default) causes it to occur the moment a PVC is made
+  - `WaitForFirstConsumer` causes it to occur after a Pod is created that uses an existing PVC
 
 --------------------
 

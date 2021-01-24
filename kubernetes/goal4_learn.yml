@@ -1,0 +1,51 @@
+# This YAML taken from the tutorial at
+# https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
+
+# Setup the Persistent Volume
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: goal4-volume
+  labels:
+    type: local
+  annotations:  # THIS IS NOT NECESSARY
+    pv.beta.kubernetes.io/gid: "1234"  # This annotation will be set on any Pod that consumes this PV
+spec:
+  storageClassName: manual  # Set a name to be keyed off in the PVC
+  capacity:
+    storage: 2Gi  # Storage maximum
+  accessModes:
+    - ReadWriteOnce  # This means a single Pod can lay Claim to this as ReadWrite
+  hostPath:
+    path: "/mnt/data"  # Path in the Node to mount the PV to -- This path must exist on the Node!
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: goal4-claim
+spec:
+  storageClassName: manual  # The same as the `pv.spec.storageClassName`
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi  # Request _up to_ the maximum storage above
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: goal4-pv-pod
+spec:
+  volumes:
+    - name: goal4-storage  # Set a name for the storage volume, to be keyed off in the Container
+      persistentVolumeClaim:
+        claimName: goal4-claim  # The name of the claim we setup
+  containers:
+    - name: goal4-container
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"  # Mirrors the PV mount point to this directory in the Pod
+          name: goal4-storage   # The name of the storage volume to mount (specified by the Pod above)
