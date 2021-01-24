@@ -1,0 +1,27 @@
+# Setup the Persistent Volume
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: goal4-pv
+  labels:
+    type: local
+spec:
+  storageClassName: goal4-sc  # Set a name to be keyed off in the PVC
+  capacity:
+    storage: 3Gi  # Storage maximum
+  accessModes:
+    - ReadWriteMany  # This means multiple Pods can lay Claim to this as ReadWrite
+  hostPath:
+    path: "/mnt/data"  # Path in the Node to mount the PV to -- This path must exist on the Node!
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: goal4-pvc
+spec:
+  storageClassName: goal4-sc  # The same as the `pv.spec.storageClassName`
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi  # Request _up to_ the maximum storage above storage volume to mount (specified by the Pod above)

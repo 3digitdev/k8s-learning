@@ -1,0 +1,30 @@
+apiVersion: apps/v1  # Use this for Deployment
+kind: Deployment
+metadata:
+  name: fastconsumer  # Name of the Deployment
+  labels:
+    app: fastconsumer_lbl  # Give a label to the Deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastconsumer_lbl  # This Deployment should only use Pods with this Label
+  template:
+    metadata:
+      labels:
+        app: fastconsumer_lbl # Label for the Deployment to match on
+    spec:
+      volumes:
+        - name: goal4-consumer-storage  # Set a name for the storage volume, to be keyed off in the Container
+          persistentVolumeClaim:
+            claimName: goal4-pvc  # The name of the claim we setup
+      containers:
+        - name: fastconsumer  # Name of the Container
+          image: fastconsumer:latest  # Image to use
+          imagePullPolicy: Never  # Need this for local images
+          env:
+            - name: USE_DATA_FILE
+              value: "true"
+          volumeMounts:
+            - mountPath: "/data/db"  # Mirrors the PV mount point to this directory in the Pod
+              name: goal4-consumer-storage   # The name of the storage volume to mount (specified by the Pod above)

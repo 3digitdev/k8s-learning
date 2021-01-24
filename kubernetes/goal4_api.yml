@@ -1,0 +1,44 @@
+apiVersion: apps/v1  # Use this for Deployment
+kind: Deployment
+metadata:
+  name: fastapi  # Name of the Deployment
+  labels:
+    app: fastapi_lbl  # Give a label to the Deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi_lbl  # This Deployment should only use Pods with this Label
+  template:
+    metadata:
+      labels:
+        app: fastapi_lbl  # Label for the Deployment to match on
+    spec:
+      volumes:
+        - name: goal4-api-storage  # Set a name for the storage volume, to be keyed off in the Container
+          persistentVolumeClaim:
+            claimName: goal4-pvc  # The name of the claim we setup
+      containers:
+        - name: fastapi  # Name of the Container
+          image: fastapi:latest  # Image to use
+          imagePullPolicy: Never  # Need this for local images
+          ports:
+            - containerPort: 8080  # Expose this Port (used by FastAPI) for the Cluster to see
+          volumeMounts:
+            - mountPath: "/data/db"  # Mirrors the PV mount point to this directory in the Pod
+              name: goal4-api-storage   # The name of the storage volume to mount (specified by the Pod above)
+---
+apiVersion: v1  # Use this for Service
+kind: Service
+metadata:
+  name: fastapi-svc  # Custom name for the API Service
+  labels:
+    app: fastapi_lbl  # Use a common label
+spec:
+  selector:
+    app: fastapi_lbl     # Match Pod(s) with this label
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8080        # Route this port inside the Pod
+      targetPort: 8080  # To this Port externally

@@ -1,12 +1,17 @@
+import json
 import uvicorn
+
 from fastapi import FastAPI
 
+DATA_FILE = "/data/db/stuff.json"
 app = FastAPI()
 
 
 @app.get("/hello")
 async def root():
-    return {"message": "Hello World!"}
+    with open(DATA_FILE, "r") as df:
+        data = json.load(df)
+    return data
 
 
 if __name__ == "__main__":
