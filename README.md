@@ -110,7 +110,7 @@ http://10.100.110.136:8080/hello [10] 200: {'message': 'Hello World!'}
 
 ---
 
-## Goal 4:  Add a Persistent Volume that both API and Consumer can access  :heavy_check_mark:
+## Goal 4:  Add a Persistent Volume that both Pods can access  :heavy_check_mark:
 
 - Build a simple single-node cluster
   - `minikube start`
