@@ -3,8 +3,7 @@ Exploratory Repo for learning K8s
 
 ### Setup
 
-- Get the simple API built for this repo
-  - `git clone https://github.com/3digitdev/k8s-learning.git && cd k8s-learning`
+`git clone https://github.com/3digitdev/k8s-learning.git && cd k8s-learning`
 
 ---
 
